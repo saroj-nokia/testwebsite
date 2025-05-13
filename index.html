@@ -43,7 +43,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+<body class="bg-gray-100 text-gray-900 transition-colors duration-300">
     <!-- Navigation Bar -->
     <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
@@ -55,8 +55,8 @@
                     <li><a href="#contact" class="hover:underline">Contact</a></li>
                 </ul>
                 <button id="themeToggle" class="p-2 bg-white dark:bg-gray-800 text-blue-600 dark:text-gray-100 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <svg id="sunIcon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg>
-                    <svg id="moonIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
+                    <svg id="sunIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg>
+                    <svg id="moonIcon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
                 </button>
             </div>
         </div>
@@ -130,27 +130,33 @@
         const moonIcon = document.getElementById('moonIcon');
         const html = document.documentElement;
 
-        // Check for saved theme
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-            sunIcon.classList.remove('hidden');
-            moonIcon.classList.add('hidden');
-        } else {
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            if (html.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
+        // Initialize theme
+        function setTheme(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
                 sunIcon.classList.remove('hidden');
                 moonIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
             } else {
-                localStorage.setItem('theme', 'light');
+                html.classList.remove('dark');
                 sunIcon.classList.add('hidden');
                 moonIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
             }
+        }
+
+        // Check saved theme or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Toggle theme on click
+        themeToggle.addEventListener('click', () => {
+            const isDark = !html.classList.contains('dark');
+            setTheme(isDark);
         });
 
         // Modal Functionality
@@ -158,6 +164,7 @@
         const modal = document.getElementById('romModal');
         const closeModalBtn = document.getElementById('closeModal');
 
+ ◄◄◄ . . . . .  8:21 PM Tuesday, May 13, 2025 (+0545)  . . . . . ►►►
         romCards.forEach(card => {
             card.addEventListener('click', () => {
                 const romName = card.dataset.romName;
