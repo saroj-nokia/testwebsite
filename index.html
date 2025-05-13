@@ -29,20 +29,23 @@
         }
         .modal-content {
             animation: slideIn 0.3s ease-out;
-            max-height: 80vh; /* Limit height to 80% of viewport height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            scrollbar-width: thin; /* Firefox: slim scrollbar */
-            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.5); /* Firefox: scrollbar colors */
+            max-height: 80vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.5);
         }
         .modal-content::-webkit-scrollbar {
-            width: 8px; /* Chrome/Safari: slim scrollbar */
+            width: 8px;
         }
         .modal-content::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5); /* Track color */
+            background: rgba(0, 0, 0, 0.5);
         }
         .modal-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3); /* Thumb color */
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
+        }
+        .changelog-container {
+            transition: opacity 0.3s ease;
         }
         @keyframes slideIn {
             from { transform: translateY(20px); opacity: 0; }
@@ -79,14 +82,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- ROM Card Example -->
                 <div class="bg-gray-800 p-6 rounded-xl shadow-md cursor-pointer rom-card"
-                     data-rom-name="SapphireROM v1.0"
-                     data-rom-desc="A lightweight custom ROM for Xiaomi Sapphire with enhanced performance."
+                     data-rom-name="Evolution-X -10.6 | Unofficial"
+                     data-rom-desc="A custom ROM for Xiaomi Sapphire with enhanced performance and customization."
                      data-changelog-url="https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt"
-                     data-download="https://github.com/saroj-nokia/testwebsite/releases/download/v1.0/sapphirerom.zip"
-                     data-source="https://github.com/saroj-nokia/sapphirerom-source"
+                     data-download="https://sourceforge.net/projects/personal-build-custom-rom/files/sapphire/evo-x/EvolutionX-15.0-20250513-sapphire-10.6-Unofficial.zip/download"
+                     data-source="https://github.com/Evolution-X"
                      data-device-tree="https://github.com/saroj-nokia/device_xiaomi_sapphire">
-                    <h3 class="text-xl font-semibold mb-2">SapphireROM v1.0</h3>
-                    <p class="text-gray-300 mb-4">A lightweight custom ROM for Xiaomi Sapphire.</p>
+                    <h3 class="text-xl font-semibold mb-2">Evolution-X -10.6 | Unofficial</h3>
+                    <p class="text-gray-300 mb-4">A stock pixel ui based custom ROM for Xiaomi Sapphire.</p>
                     <span class="text-blue-400 font-semibold hover:underline">View Details</span>
                 </div>
                 <!-- Add more ROM cards as needed -->
@@ -100,12 +103,14 @@
             <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100">×</button>
             <h2 id="modalRomName" class="text-2xl font-bold mb-4"></h2>
             <p id="modalRomDesc" class="text-gray-300 mb-4"></p>
-            <h3 class="text-lg font-semibold mb-2">Changelog</h3>
-            <ul id="modalChangelog" class="list-disc list-inside mb-4 text-gray-300"></ul>
+            <h3 id="changelogToggle" class="text-lg font-semibold mb-2 cursor-pointer hover:text-blue-400">Changelog</h3>
+            <div id="changelogContainer" class="changelog-container bg-gray-900 p-4 rounded-md mb-4 hidden">
+                <ul id="modalChangelog" class="list-disc list-inside text-gray-300"></ul>
+            </div>
             <div class="flex flex-col space-y-2">
-                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline">Download ROM</a>
-                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline">ROM Source</a>
-                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline">Device Tree</a>
+                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">Download ROM</a>
+                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">ROM Source</a>
+                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">Device Tree</a>
             </div>
         </div>
     </div>
@@ -129,9 +134,18 @@
         const romCards = document.querySelectorAll('.rom-card');
         const modal = document.getElementById('romModal');
         const closeModalBtn = document.getElementById('closeModal');
+        const changelogToggle = document.getElementById('changelogToggle');
+        const changelogContainer = document.getElementById('changelogContainer');
+        const changelogList = document.getElementById('modalChangelog');
+        const fallbackChangelog = [
+            'Initial release',
+            '- Unable to load full changelog',
+            '- Please check the source repository'
+        ];
+        let isChangelogLoaded = false;
 
         romCards.forEach(card => {
-            card.addEventListener('click', async () => {
+            card.addEventListener('click', () => {
                 const romName = card.dataset.romName;
                 const romDesc = card.dataset.romDesc;
                 const changelogUrl = card.dataset.changelogUrl;
@@ -141,14 +155,38 @@
 
                 document.getElementById('modalRomName').textContent = romName;
                 document.getElementById('modalRomDesc').textContent = romDesc;
-                const changelogList = document.getElementById('modalChangelog');
-                changelogList.innerHTML = '';
+                document.getElementById('modalDownload').href = download;
+                document.getElementById('modalSource').href = source;
+                document.getElementById('modalDeviceTree').href = deviceTree;
 
+                // Reset changelog state
+                changelogContainer.classList.add('hidden');
+                changelogList.innerHTML = '';
+                isChangelogLoaded = false;
+
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // Toggle changelog visibility and load if not already loaded
+        changelogToggle.addEventListener('click', async () => {
+            changelogContainer.classList.toggle('hidden');
+
+            if (!changelogContainer.classList.contains('hidden') && !isChangelogLoaded) {
                 try {
-                    const response = await fetch(changelogUrl);
+                    const response = await fetch(romCards[0].dataset.changelogUrl);
                     if (!response.ok) throw new Error('Failed to fetch changelog');
                     const changelogText = await response.text();
+
+                    // Basic validation: Ensure no HTML/JS tags
+                    if (/[<>{}]/.test(changelogText)) {
+                        throw new Error('Invalid changelog content');
+                    }
+
                     const changelog = changelogText.split('\n').filter(item => item.trim());
+                    if (changelog.length === 0) {
+                        throw new Error('Empty changelog');
+                    }
 
                     changelog.forEach(item => {
                         const li = document.createElement('li');
@@ -156,18 +194,15 @@
                         changelogList.appendChild(li);
                     });
                 } catch (error) {
-                    const li = document.createElement('li');
-                    li.textContent = 'Error loading changelog';
-                    changelogList.appendChild(li);
+                    fallbackChangelog.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        changelogList.appendChild(li);
+                    });
                     console.error('Changelog fetch error:', error);
                 }
-
-                document.getElementById('modalDownload').href = download;
-                document.getElementById('modalSource').href = source;
-                document.getElementById('modalDeviceTree').href = deviceTree;
-
-                modal.classList.remove('hidden');
-            });
+                isChangelogLoaded = true;
+            }
         });
 
         closeModalBtn.addEventListener('click', () => {
