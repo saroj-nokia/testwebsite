@@ -55,10 +55,10 @@
 </head>
 <body class="bg-gray-900 text-gray-100 transition-colors duration-300">
     <!-- Navigation Bar -->
-    <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Saroj Nokia ROMs</h1>
-            <ul class="flex space-x-4">
+    <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 lg:p-6 text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto max-w-7xl flex justify-between items-center">
+            <h1 class="text-2xl lg:text-3xl font-bold">Saroj Nokia ROMs</h1>
+            <ul class="flex space-x-4 lg:space-x-8 text-base lg:text-lg">
                 <li><a href="#home" class="hover:underline">Home</a></li>
                 <li><a href="#roms" class="hover:underline">ROMs</a></li>
                 <li><a href="#contact" class="hover:underline">Contact</a></li>
@@ -67,30 +67,30 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-gradient-to-b from-blue-500 to-indigo-500 text-white py-20 text-center">
-        <div class="container mx-auto">
-            <h2 class="text-4xl font-bold mb-4">Welcome to Saroj Nokia ROMs</h2>
-            <p class="text-lg mb-6">Explore our collection of custom Android ROMs built for performance and customization.</p>
-            <a href="#roms" class="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transform hover:scale-105 transition-transform">View ROMs</a>
+    <section id="home" class="bg-gradient-to-b from-blue-500 to-indigo-500 text-white py-20 lg:py-32 text-center">
+        <div class="container mx-auto max-w-5xl px-4 lg:px-8">
+            <h2 class="text-4xl lg:text-6xl font-bold mb-4 lg:mb-6">Welcome to Saroj Nokia ROMs</h2>
+            <p class="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-3xl mx-auto">Explore our collection of custom Android ROMs built for performance and customization.</p>
+            <a href="#roms" class="bg-white text-blue-600 px-6 lg:px-8 py-3 lg:py-4 rounded-full font-semibold text-base lg:text-lg hover:bg-gray-200 transform hover:scale-105 transition-transform">View ROMs</a>
         </div>
     </section>
 
     <!-- ROMs Section -->
-    <section id="roms" class="py-16">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-8">Available ROMs</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section id="roms" class="py-16 lg:py-24">
+        <div class="container mx-auto max-w-7xl px-4 lg:px-8">
+            <h2 class="text-3xl lg:text-5xl font-bold text-center mb-8 lg:mb-12">Available ROMs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 <!-- ROM Card Example -->
-                <div class="bg-gray-800 p-6 rounded-xl shadow-md cursor-pointer rom-card"
+                <div class="bg-gray-800 p-6 lg:p-8 rounded-xl shadow-md cursor-pointer rom-card"
                      data-rom-name="Evolution-X -10.6 | Unofficial"
                      data-rom-desc="A custom ROM for Xiaomi Sapphire with enhanced performance and customization."
                      data-changelog-url="https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt"
                      data-download="https://sourceforge.net/projects/personal-build-custom-rom/files/sapphire/evo-x/EvolutionX-15.0-20250513-sapphire-10.6-Unofficial.zip/download"
                      data-source="https://github.com/Evolution-X"
                      data-device-tree="https://github.com/saroj-nokia/device_xiaomi_sapphire">
-                    <h3 class="text-xl font-semibold mb-2">Evolution-X -10.6 | Unofficial</h3>
-                    <p class="text-gray-300 mb-4">A stock pixel ui based custom ROM for Xiaomi Sapphire.</p>
-                    <span class="text-blue-400 font-semibold hover:underline">View Details</span>
+                    <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">Evolution-X -10.6 | Unofficial</h3>
+                    <p class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg">A stock pixel UI based custom ROM for Xiaomi Sapphire.</p>
+                    <span class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">View Details</span>
                 </div>
                 <!-- Add more ROM cards as needed -->
             </div>
@@ -99,34 +99,34 @@
 
     <!-- Modal -->
     <div id="romModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden flex items-center justify-center z-50">
-        <div class="glassmorphism rounded-xl p-8 max-w-lg w-full mx-4 modal-content relative">
-            <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100">×</button>
-            <h2 id="modalRomName" class="text-2xl font-bold mb-4"></h2>
-            <p id="modalRomDesc" class="text-gray-300 mb-4"></p>
-            <h3 id="changelogToggle" class="text-lg font-semibold mb-2 cursor-pointer hover:text-blue-400">Changelog</h3>
-            <div id="changelogContainer" class="changelog-container bg-gray-900 p-4 rounded-md mb-4 hidden">
-                <ul id="modalChangelog" class="list-disc list-inside text-gray-300"></ul>
+        <div class="glassmorphism rounded-xl p-6 lg:p-8 max-w-lg lg:max-w-2xl w-full mx-4 modal-content relative">
+            <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100 text-xl lg:text-2xl">×</button>
+            <h2 id="modalRomName" class="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6"></h2>
+            <p id="modalRomDesc" class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg"></p>
+            <h3 id="changelogToggle" class="text-lg lg:text-xl font-semibold mb-2 lg:mb-3 cursor-pointer hover:text-blue-400">Changelog</h3>
+            <div id="changelogContainer" class="changelog-container bg-gray-900 p-4 lg:p-6 rounded-md mb-4 lg:mb-6 hidden">
+                <ul id="modalChangelog" class="list-disc list-inside text-gray-300 text-base lg:text-lg"></ul>
             </div>
-            <div class="flex flex-col space-y-2">
-                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">Download ROM</a>
-                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">ROM Source</a>
-                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline" rel="noopener noreferrer">Device Tree</a>
+            <div class="flex flex-col space-y-2 lg:space-y-3">
+                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">Download ROM</a>
+                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">ROM Source</a>
+                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">Device Tree</a>
             </div>
         </div>
     </div>
 
     <!-- Contact Section -->
-    <section id="contact" class="bg-gray-800 py-16">
-        <div class="container mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
-            <p class="text-lg mb-6">Have questions or need support? Reach out to us!</p>
-            <a href="https://t.me/personalbuildchat" class="text-blue-400 font-semibold hover:underline">Telegram</a>
+    <section id="contact" class="bg-gray-800 py-16 lg:py-24">
+        <div class="container mx-auto max-w-5xl px-4 lg:px-8 text-center">
+            <h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-6">Get in Touch</h2>
+            <p class="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-3xl mx-auto">Have questions or need support? Reach out to us!</p>
+            <a href="https://t.me/personalbuildchat" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">Telegram</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 text-center">
-        <p>© 2025 Saroj Nokia ROMs. All rights reserved.</p>
+    <footer class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 lg:py-6 text-center">
+        <p class="text-base lg:text-lg">© 2025 Saroj Nokia ROMs. All rights reserved.</p>
     </footer>
 
     <script>
@@ -164,6 +164,9 @@
                 changelogList.innerHTML = '';
                 isChangelogLoaded = false;
 
+                // Store changelog URL in modal for fetching
+                modal.dataset.changelogUrl = changelogUrl;
+
                 modal.classList.remove('hidden');
             });
         });
@@ -174,7 +177,7 @@
 
             if (!changelogContainer.classList.contains('hidden') && !isChangelogLoaded) {
                 try {
-                    const response = await fetch(romCards[0].dataset.changelogUrl);
+                    const response = await fetch(modal.dataset.changelogUrl);
                     if (!response.ok) throw new Error('Failed to fetch changelog');
                     const changelogText = await response.text();
 
