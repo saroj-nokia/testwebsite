@@ -29,6 +29,20 @@
         }
         .modal-content {
             animation: slideIn 0.3s ease-out;
+            max-height: 80vh; /* Limit height to 80% of viewport height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            scrollbar-width: thin; /* Firefox: slim scrollbar */
+            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.5); /* Firefox: scrollbar colors */
+        }
+        .modal-content::-webkit-scrollbar {
+            width: 8px; /* Chrome/Safari: slim scrollbar */
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5); /* Track color */
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3); /* Thumb color */
+            border-radius: 4px;
         }
         @keyframes slideIn {
             from { transform: translateY(20px); opacity: 0; }
@@ -65,14 +79,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- ROM Card Example -->
                 <div class="bg-gray-800 p-6 rounded-xl shadow-md cursor-pointer rom-card"
-                     data-rom-name="NokiaROM v1.0"
-                     data-rom-desc="A fast and stable custom ROM for Nokia 6.1, based on LineageOS."
-                     data-changelog="Initial release\n- Improved performance\n- Added custom kernel\n- Fixed camera bugs"
-                     data-download="https://github.com/saroj-nokia/testwebsite/releases/download/v1.0/nokiarom.zip"
-                     data-source="https://github.com/saroj-nokia/nokiarom-source"
-                     data-device-tree="https://github.com/saroj-nokia/device_nokia_6.1">
-                    <h3 class="text-xl font-semibold mb-2">NokiaROM v1.0</h3>
-                    <p class="text-gray-300 mb-4">A fast and stable custom ROM for Nokia 6.1.</p>
+                     data-rom-name="SapphireROM v1.0"
+                     data-rom-desc="A lightweight custom ROM for Xiaomi Sapphire with enhanced performance."
+                     data-changelog-url="https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt"
+                     data-download="https://github.com/saroj-nokia/testwebsite/releases/download/v1.0/sapphirerom.zip"
+                     data-source="https://github.com/saroj-nokia/sapphirerom-source"
+                     data-device-tree="https://github.com/saroj-nokia/device_xiaomi_sapphire">
+                    <h3 class="text-xl font-semibold mb-2">SapphireROM v1.0</h3>
+                    <p class="text-gray-300 mb-4">A lightweight custom ROM for Xiaomi Sapphire.</p>
                     <span class="text-blue-400 font-semibold hover:underline">View Details</span>
                 </div>
                 <!-- Add more ROM cards as needed -->
@@ -117,10 +131,10 @@
         const closeModalBtn = document.getElementById('closeModal');
 
         romCards.forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', async () => {
                 const romName = card.dataset.romName;
                 const romDesc = card.dataset.romDesc;
-                const changelog = card.dataset.changelog.split('\n');
+                const changelogUrl = card.dataset.changelogUrl;
                 const download = card.dataset.download;
                 const source = card.dataset.source;
                 const deviceTree = card.dataset.deviceTree;
@@ -129,13 +143,25 @@
                 document.getElementById('modalRomDesc').textContent = romDesc;
                 const changelogList = document.getElementById('modalChangelog');
                 changelogList.innerHTML = '';
-                changelog.forEach(item => {
-                    if (item.trim()) {
+
+                try {
+                    const response = await fetch(changelogUrl);
+                    if (!response.ok) throw new Error('Failed to fetch changelog');
+                    const changelogText = await response.text();
+                    const changelog = changelogText.split('\n').filter(item => item.trim());
+
+                    changelog.forEach(item => {
                         const li = document.createElement('li');
                         li.textContent = item;
                         changelogList.appendChild(li);
-                    }
-                });
+                    });
+                } catch (error) {
+                    const li = document.createElement('li');
+                    li.textContent = 'Error loading changelog';
+                    changelogList.appendChild(li);
+                    console.error('Changelog fetch error:', error);
+                }
+
                 document.getElementById('modalDownload').href = download;
                 document.getElementById('modalSource').href = source;
                 document.getElementById('modalDeviceTree').href = deviceTree;
