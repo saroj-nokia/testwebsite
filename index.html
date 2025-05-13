@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,9 @@
             -webkit-backdrop-filter: blur(8px);
         }
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .dark .glassmorphism {
-            background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .rom-card {
@@ -29,9 +25,6 @@
         }
         .rom-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-        .dark .rom-card:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
         }
         .modal-content {
@@ -43,22 +36,16 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900 transition-colors duration-300">
+<body class="bg-gray-900 text-gray-100 transition-colors duration-300">
     <!-- Navigation Bar -->
     <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Saroj Nokia ROMs</h1>
-            <div class="flex items-center space-x-4">
-                <ul class="flex space-x-4">
-                    <li><a href="#home" class="hover:underline">Home</a></li>
-                    <li><a href="#roms" class="hover:underline">ROMs</a></li>
-                    <li><a href="#contact" class="hover:underline">Contact</a></li>
-                </ul>
-                <button id="themeToggle" class="p-2 bg-white dark:bg-gray-800 text-blue-600 dark:text-gray-100 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <svg id="sunIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg>
-                    <svg id="moonIcon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
-                </button>
-            </div>
+            <ul class="flex space-x-4">
+                <li><a href="#home" class="hover:underline">Home</a></li>
+                <li><a href="#roms" class="hover:underline">ROMs</a></li>
+                <li><a href="#contact" class="hover:underline">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -77,7 +64,7 @@
             <h2 class="text-3xl font-bold text-center mb-8">Available ROMs</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- ROM Card Example -->
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md cursor-pointer rom-card"
+                <div class="bg-gray-800 p-6 rounded-xl shadow-md cursor-pointer rom-card"
                      data-rom-name="NokiaROM v1.0"
                      data-rom-desc="A fast and stable custom ROM for Nokia 6.1, based on LineageOS."
                      data-changelog="Initial release\n- Improved performance\n- Added custom kernel\n- Fixed camera bugs"
@@ -85,8 +72,8 @@
                      data-source="https://github.com/saroj-nokia/nokiarom-source"
                      data-device-tree="https://github.com/saroj-nokia/device_nokia_6.1">
                     <h3 class="text-xl font-semibold mb-2">NokiaROM v1.0</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">A fast and stable custom ROM for Nokia 6.1.</p>
-                    <span class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">View Details</span>
+                    <p class="text-gray-300 mb-4">A fast and stable custom ROM for Nokia 6.1.</p>
+                    <span class="text-blue-400 font-semibold hover:underline">View Details</span>
                 </div>
                 <!-- Add more ROM cards as needed -->
             </div>
@@ -96,25 +83,25 @@
     <!-- Modal -->
     <div id="romModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden flex items-center justify-center z-50">
         <div class="glassmorphism rounded-xl p-8 max-w-lg w-full mx-4 modal-content relative">
-            <button id="closeModal" class="absolute top-2 right-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100">×</button>
+            <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100">×</button>
             <h2 id="modalRomName" class="text-2xl font-bold mb-4"></h2>
-            <p id="modalRomDesc" class="text-gray-600 dark:text-gray-300 mb-4"></p>
+            <p id="modalRomDesc" class="text-gray-300 mb-4"></p>
             <h3 class="text-lg font-semibold mb-2">Changelog</h3>
-            <ul id="modalChangelog" class="list-disc list-inside mb-4 text-gray-600 dark:text-gray-300"></ul>
+            <ul id="modalChangelog" class="list-disc list-inside mb-4 text-gray-300"></ul>
             <div class="flex flex-col space-y-2">
-                <a id="modalDownload" href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Download ROM</a>
-                <a id="modalSource" href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">ROM Source</a>
-                <a id="modalDeviceTree" href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Device Tree</a>
+                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline">Download ROM</a>
+                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline">ROM Source</a>
+                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline">Device Tree</a>
             </div>
         </div>
     </div>
 
     <!-- Contact Section -->
-    <section id="contact" class="bg-gray-200 dark:bg-gray-800 py-16">
+    <section id="contact" class="bg-gray-800 py-16">
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
             <p class="text-lg mb-6">Have questions or need support? Reach out to us!</p>
-            <a href="mailto:your.email@example.com" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Email Us</a>
+            <a href="mailto:your.email@example.com" class="text-blue-400 font-semibold hover:underline">Email Us</a>
         </div>
     </section>
 
@@ -124,47 +111,11 @@
     </footer>
 
     <script>
-        // Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const sunIcon = document.getElementById('sunIcon');
-        const moonIcon = document.getElementById('moonIcon');
-        const html = document.documentElement;
-
-        // Initialize theme
-        function setTheme(isDark) {
-            if (isDark) {
-                html.classList.add('dark');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                html.classList.remove('dark');
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-
-        // Check saved theme or system preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            setTheme(true);
-        } else {
-            setTheme(false);
-        }
-
-        // Toggle theme on click
-        themeToggle.addEventListener('click', () => {
-            const isDark = !html.classList.contains('dark');
-            setTheme(isDark);
-        });
-
         // Modal Functionality
         const romCards = document.querySelectorAll('.rom-card');
         const modal = document.getElementById('romModal');
         const closeModalBtn = document.getElementById('closeModal');
 
- ◄◄◄ . . . . .  8:21 PM Tuesday, May 13, 2025 (+0545)  . . . . . ►►►
         romCards.forEach(card => {
             card.addEventListener('click', () => {
                 const romName = card.dataset.romName;
