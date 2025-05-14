@@ -6,6 +6,8 @@
     <title>Saroj Nokia ROMs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -28,7 +30,7 @@
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
         }
         .modal-content {
-            animation: slideIn 0.3s ease-out;
+            animation: openFromCard 0.4s ease-out forwards;
             max-height: 80vh;
             overflow-y: auto;
             scrollbar-width: thin;
@@ -47,6 +49,16 @@
         .changelog-container {
             transition: opacity 0.3s ease;
         }
+        @keyframes openFromCard {
+            from {
+                transform: scale(0.2) translate(var(--start-x), var(--start-y));
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+        }
         @keyframes slideIn {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -54,15 +66,43 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 transition-colors duration-300">
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (Flowbite) -->
     <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 lg:p-6 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto max-w-7xl flex justify-between items-center">
-            <h1 class="text-2xl lg:text-3xl font-bold">Saroj Nokia ROMs</h1>
-            <ul class="flex space-x-4 lg:space-x-8 text-base lg:text-lg">
-                <li><a href="#home" class="hover:underline">Home</a></li>
-                <li><a href="#roms" class="hover:underline">ROMs</a></li>
-                <li><a href="#contact" class="hover:underline">Contact</a></li>
-            </ul>
+            <a href="#home" class="flex items-center">
+                <img src="https://via.placeholder.com/150x50?text=Saroj+Nokia+ROMs" alt="Saroj Nokia ROMs Logo" class="h-8 lg:h-10">
+            </a>
+            <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-100 rounded-lg md:hidden hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-100 dark:hover:bg-indigo-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+                <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-indigo-600 md:bg-transparent md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-indigo-600 dark:border-gray-700">
+                    <li>
+                        <a href="#home" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0 dark:text-white md:dark:text-white hover:underline" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-white rounded hover:bg-indigo-700 md:hover:bg-transparent md:border-0 md:hover:text-gray-200 md:p-0 md:w-auto dark:text-white md:dark:hover:text-gray-200 dark:hover:bg-indigo-700 dark:hover:text-white md:dark:hover:bg-transparent">ROMs <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg></button>
+                        <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownNavbarLink">
+                                <li>
+                                    <a href="#roms" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Available ROMs</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Upcoming Releases</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#contact" class="block py-2 px-3 text-white rounded hover:bg-indigo-700 md:hover:bg-transparent md:border-0 md:hover:text-gray-200 md:p-0 dark:text-white md:dark:hover:text-gray-200 dark:hover:bg-indigo-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -80,17 +120,19 @@
         <div class="container mx-auto max-w-7xl px-4 lg:px-8">
             <h2 class="text-3xl lg:text-5xl font-bold text-center mb-8 lg:mb-12">Available ROMs</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                <!-- ROM Card Example -->
-                <div class="bg-gray-800 p-6 lg:p-8 rounded-xl shadow-md cursor-pointer rom-card"
+                <!-- ROM Card Example (Flowbite) -->
+                <div class="rom-card bg-gray-800 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
                      data-rom-name="Evolution-X -10.6 | Unofficial"
-                     data-rom-desc="A custom ROM for Xiaomi Redmi note 13 4G with enhanced performance and customization."
+                     data-rom-desc="A custom ROM for Xiaomi Redmi Note 13 4G with enhanced performance and customization."
                      data-changelog-url="https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt"
                      data-download="https://sourceforge.net/projects/personal-build-custom-rom/files/sapphire/evo-x/EvolutionX-15.0-20250513-sapphire-10.6-Unofficial.zip/download"
                      data-source="https://github.com/Evolution-X"
                      data-device-tree="https://github.com/saroj-nokia/device_xiaomi_sapphire">
-                    <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">Evolution-X -10.6 | Unofficial</h3>
-                    <p class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg">A stock pixel UI based custom ROM for Xiaomi Redmi note 13 4G.</p>
-                    <span class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">View Details</span>
+                    <div class="p-6 lg:p-8">
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4 text-white">Evolution-X -10.6 | Unofficial</h3>
+                        <p class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg">A stock pixel UI based custom ROM for Xiaomi Redmi Note 13 4G.</p>
+                        <span class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">View Details</span>
+                    </div>
                 </div>
                 <!-- Add more ROM cards as needed -->
             </div>
@@ -129,10 +171,13 @@
         <p class="text-base lg:text-lg">© 2025 Saroj Nokia ROMs. All rights reserved.</p>
     </footer>
 
+    <!-- Flowbite JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
     <script>
         // Modal Functionality
         const romCards = document.querySelectorAll('.rom-card');
         const modal = document.getElementById('romModal');
+        const modalContent = modal.querySelector('.modal-content');
         const closeModalBtn = document.getElementById('closeModal');
         const changelogToggle = document.getElementById('changelogToggle');
         const changelogContainer = document.getElementById('changelogContainer');
@@ -145,7 +190,18 @@
         let isChangelogLoaded = false;
 
         romCards.forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                // Get ROM card position
+                const rect = card.getBoundingClientRect();
+                const scrollY = window.scrollY || window.pageYOffset;
+                const startX = rect.left + rect.width / 2 - window.innerWidth / 2;
+                const startY = rect.top + rect.height / 2 + scrollY - window.innerHeight / 2;
+
+                // Set modal starting position
+                modalContent.style.setProperty('--start-x', `${startX}px`);
+                modalContent.style.setProperty('--start-y', `${startY}px`);
+
+                // Populate modal
                 const romName = card.dataset.romName;
                 const romDesc = card.dataset.romDesc;
                 const changelogUrl = card.dataset.changelogUrl;
@@ -164,9 +220,10 @@
                 changelogList.innerHTML = '';
                 isChangelogLoaded = false;
 
-                // Store changelog URL in modal for fetching
+                // Store changelog URL
                 modal.dataset.changelogUrl = changelogUrl;
 
+                // Show modal
                 modal.classList.remove('hidden');
             });
         });
