@@ -6,7 +6,6 @@
     <title>Saroj Nokia ROMs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Flowbite CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css" rel="stylesheet">
     <style>
         body {
@@ -24,6 +23,7 @@
         }
         .rom-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideIn 0.5s ease-out forwards; /* Apply slide-in animation */
         }
         .rom-card:hover {
             transform: translateY(-5px);
@@ -66,7 +66,6 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 transition-colors duration-300">
-    <!-- Navigation Bar (Flowbite) -->
     <nav class="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 lg:p-6 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto max-w-7xl flex justify-between items-center">
             <a href="#home" class="flex items-center">
@@ -85,8 +84,8 @@
                     </li>
                     <li>
                         <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-white rounded hover:bg-indigo-700 md:hover:bg-transparent md:border-0 md:hover:text-gray-200 md:p-0 md:w-auto dark:text-white md:dark:hover:text-gray-200 dark:hover:bg-indigo-700 dark:hover:text-white md:dark:hover:bg-transparent">ROMs <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg></button>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg></button>
                         <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownNavbarLink">
                                 <li>
@@ -106,7 +105,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="bg-gradient-to-b from-blue-500 to-indigo-500 text-white py-20 lg:py-32 text-center">
         <div class="container mx-auto max-w-5xl px-4 lg:px-8">
             <h2 class="text-4xl lg:text-6xl font-bold mb-4 lg:mb-6">Welcome to Saroj Nokia ROMs</h2>
@@ -115,124 +113,236 @@
         </div>
     </section>
 
-    <!-- ROMs Section -->
     <section id="roms" class="py-16 lg:py-24">
         <div class="container mx-auto max-w-7xl px-4 lg:px-8">
             <h2 class="text-3xl lg:text-5xl font-bold text-center mb-8 lg:mb-12">Available ROMs</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                <!-- ROM Card Example (Flowbite) -->
-                <div class="rom-card bg-gray-800 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
-                     data-rom-name="Evolution-X -10.6 | Unofficial"
-                     data-rom-desc="A custom ROM for Xiaomi Redmi Note 13 4G with enhanced performance and customization."
-                     data-changelog-url="https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt"
-                     data-download="https://sourceforge.net/projects/personal-build-custom-rom/files/sapphire/evo-x/EvolutionX-15.0-20250513-sapphire-10.6-Unofficial.zip/download"
-                     data-source="https://github.com/Evolution-X"
-                     data-device-tree="https://github.com/saroj-nokia/device_xiaomi_sapphire">
-                    <div class="p-6 lg:p-8">
-                        <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4 text-white">Evolution-X -10.6 | Unofficial</h3>
-                        <p class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg">A stock pixel UI based custom ROM for Xiaomi Redmi Note 13 4G.</p>
-                        <span class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">View Details</span>
-                    </div>
-                </div>
-                <!-- Add more ROM cards as needed -->
+            
+            <div class="mb-8 flex flex-col md:flex-row gap-4 items-center">
+                <input type="text" id="romSearch" placeholder="Search ROMs..." class="w-full md:w-1/2 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                <select id="deviceFilter" class="w-full md:w-1/4 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                    <option value="">All Devices</option>
+                    </select>
+                <select id="androidVersionFilter" class="w-full md:w-1/4 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                    <option value="">All Android Versions</option>
+                    </select>
+            </div>
+
+            <div id="romsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <p id="noResults" class="hidden text-center text-gray-400 col-span-full">No ROMs found matching your criteria.</p>
             </div>
         </div>
     </section>
 
-    <!-- Modal -->
     <div id="romModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden flex items-center justify-center z-50">
         <div class="glassmorphism rounded-xl p-6 lg:p-8 max-w-lg lg:max-w-2xl w-full mx-4 modal-content relative">
-            <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100 text-xl lg:text-2xl">×</button>
+            <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100 text-xl lg:text-2xl" aria-label="Close modal">×</button>
             <h2 id="modalRomName" class="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6"></h2>
             <p id="modalRomDesc" class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg"></p>
-            <h3 id="changelogToggle" class="text-lg lg:text-xl font-semibold mb-2 lg:mb-3 cursor-pointer hover:text-blue-400">Changelog</h3>
+            <p class="text-gray-400 mb-2">Device: <span id="modalDevice" class="text-gray-200 font-medium"></span></p>
+            <p class="text-gray-400 mb-4">Android Version: <span id="modalAndroidVersion" class="text-gray-200 font-medium"></span></p>
+
+            <h3 id="changelogToggle" class="text-lg lg:text-xl font-semibold mb-2 lg:mb-3 cursor-pointer hover:text-blue-400">Changelog <span class="text-sm ml-1"> (click to expand)</span></h3>
             <div id="changelogContainer" class="changelog-container bg-gray-900 p-4 lg:p-6 rounded-md mb-4 lg:mb-6 hidden">
                 <ul id="modalChangelog" class="list-disc list-inside text-gray-300 text-base lg:text-lg"></ul>
+                <p id="changelogError" class="text-red-400 text-sm mt-2 hidden">Failed to load changelog. Please check the source or try again later.</p>
             </div>
             <div class="flex flex-col space-y-2 lg:space-y-3">
-                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">Download ROM</a>
-                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">ROM Source</a>
-                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" rel="noopener noreferrer">Device Tree</a>
+                <a id="modalDownload" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" target="_blank" rel="noopener noreferrer">Download ROM</a>
+                <a id="modalSource" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" target="_blank" rel="noopener noreferrer">ROM Source</a>
+                <a id="modalDeviceTree" href="#" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" target="_blank" rel="noopener noreferrer">Device Tree</a>
             </div>
         </div>
     </div>
 
-    <!-- Contact Section -->
     <section id="contact" class="bg-gray-800 py-16 lg:py-24">
         <div class="container mx-auto max-w-5xl px-4 lg:px-8 text-center">
             <h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-6">Get in Touch</h2>
             <p class="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-3xl mx-auto">Have questions or need support? Reach out to us!</p>
-            <a href="https://t.me/personalbuildchat" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">Telegram</a>
+            <a href="https://t.me/personalbuildchat" class="text-blue-400 font-semibold hover:underline text-base lg:text-lg" target="_blank" rel="noopener noreferrer">Telegram</a>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 lg:py-6 text-center">
         <p class="text-base lg:text-lg">© 2025 Saroj Nokia ROMs. All rights reserved.</p>
     </footer>
 
-    <!-- Flowbite JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
     <script>
-        // Modal Functionality
-        const romCards = document.querySelectorAll('.rom-card');
+        const romsData = [
+            {
+                "id": "evo-x-sapphire",
+                "name": "Evolution-X - 10.6 | Unofficial",
+                "device": "Xiaomi Redmi Note 13 4G",
+                "androidVersion": "Android 14",
+                "desc": "A stock Pixel UI based custom ROM for Xiaomi Redmi Note 13 4G with enhanced performance and customization.",
+                "changelogUrl": "https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/sapphire.txt",
+                "downloadUrl": "https://sourceforge.net/projects/personal-build-custom-rom/files/sapphire/evo-x/EvolutionX-15.0-20250513-sapphire-10.6-Unofficial.zip/download",
+                "sourceUrl": "https://github.com/Evolution-X",
+                "deviceTreeUrl": "https://github.com/saroj-nokia/device_xiaomi_sapphire"
+            },
+            {
+                "id": "lineageos-marble",
+                "name": "LineageOS 21 | Unofficial",
+                "device": "Xiaomi 13 Lite",
+                "androidVersion": "Android 14",
+                "desc": "A clean, bloat-free experience with essential features, based on LineageOS for Xiaomi 13 Lite.",
+                "changelogUrl": "https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/marble.txt",
+                "downloadUrl": "https://sourceforge.net/projects/personal-build-custom-rom/files/marble/lineage/lineage-21.0-20250620-UNOFFICIAL-marble.zip/download",
+                "sourceUrl": "https://github.com/LineageOS",
+                "deviceTreeUrl": "https://github.com/saroj-nokia/device_xiaomi_marble"
+            },
+            {
+                "id": "pixelos-fog",
+                "name": "PixelOS | Official",
+                "device": "Xiaomi Poco X5 5G",
+                "androidVersion": "Android 13",
+                "desc": "Experience pure Pixel UI with stable performance and timely updates for Poco X5 5G.",
+                "changelogUrl": "https://raw.githubusercontent.com/saroj-nokia/OTA/vic/changelogs/fog.txt",
+                "downloadUrl": "https://sourceforge.net/projects/personal-build-custom-rom/files/fog/pixelos/PixelOS_fog-13.0-20250615-OFFICIAL.zip/download",
+                "sourceUrl": "https://github.com/PixelOS-AOSP",
+                "deviceTreeUrl": "https://github.com/saroj-nokia/device_xiaomi_fog"
+            }
+            // Add more ROM objects here
+        ];
+
+        // DOM Elements
+        const romsContainer = document.getElementById('romsContainer');
+        const romSearch = document.getElementById('romSearch');
+        const deviceFilter = document.getElementById('deviceFilter');
+        const androidVersionFilter = document.getElementById('androidVersionFilter');
+        const noResultsMessage = document.getElementById('noResults');
+
         const modal = document.getElementById('romModal');
         const modalContent = modal.querySelector('.modal-content');
         const closeModalBtn = document.getElementById('closeModal');
         const changelogToggle = document.getElementById('changelogToggle');
         const changelogContainer = document.getElementById('changelogContainer');
         const changelogList = document.getElementById('modalChangelog');
+        const changelogError = document.getElementById('changelogError');
+
         const fallbackChangelog = [
             'Initial release',
             '- Unable to load full changelog',
             '- Please check the source repository'
         ];
         let isChangelogLoaded = false;
+        let allDevices = new Set();
+        let allAndroidVersions = new Set();
 
-        romCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                // Get ROM card position
-                const rect = card.getBoundingClientRect();
-                const scrollY = window.scrollY || window.pageYOffset;
-                const startX = rect.left + rect.width / 2 - window.innerWidth / 2;
-                const startY = rect.top + rect.height / 2 + scrollY - window.innerHeight / 2;
+        // Function to render ROM cards
+        function renderRomCards(filteredRoms) {
+            romsContainer.innerHTML = ''; // Clear existing cards
+            if (filteredRoms.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+                return;
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
 
-                // Set modal starting position
-                modalContent.style.setProperty('--start-x', `${startX}px`);
-                modalContent.style.setProperty('--start-y', `${startY}px`);
+            filteredRoms.forEach(rom => {
+                const card = document.createElement('div');
+                card.classList.add('rom-card', 'bg-gray-800', 'rounded-lg', 'shadow-md', 'dark:bg-gray-800', 'dark:border-gray-700', 'cursor-pointer');
+                card.dataset.id = rom.id; // Store ID for easy lookup
 
-                // Populate modal
-                const romName = card.dataset.romName;
-                const romDesc = card.dataset.romDesc;
-                const changelogUrl = card.dataset.changelogUrl;
-                const download = card.dataset.download;
-                const source = card.dataset.source;
-                const deviceTree = card.dataset.deviceTree;
+                card.innerHTML = `
+                    <div class="p-6 lg:p-8">
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3 lg:mb-4 text-white">${rom.name}</h3>
+                        <p class="text-gray-300 mb-2 text-base lg:text-lg">${rom.desc}</p>
+                        <p class="text-gray-400 text-sm">Device: ${rom.device}</p>
+                        <p class="text-gray-400 text-sm mb-4">Android: ${rom.androidVersion}</p>
+                        <span class="text-blue-400 font-semibold hover:underline text-base lg:text-lg">View Details</span>
+                    </div>
+                `;
+                romsContainer.appendChild(card);
 
-                document.getElementById('modalRomName').textContent = romName;
-                document.getElementById('modalRomDesc').textContent = romDesc;
-                document.getElementById('modalDownload').href = download;
-                document.getElementById('modalSource').href = source;
-                document.getElementById('modalDeviceTree').href = deviceTree;
-
-                // Reset changelog state
-                changelogContainer.classList.add('hidden');
-                changelogList.innerHTML = '';
-                isChangelogLoaded = false;
-
-                // Store changelog URL
-                modal.dataset.changelogUrl = changelogUrl;
-
-                // Show modal
-                modal.classList.remove('hidden');
+                // Add event listener to the newly created card
+                card.addEventListener('click', (e) => {
+                    openRomModal(rom, card);
+                });
             });
-        });
+        }
+
+        // Function to populate filters
+        function populateFilters() {
+            romsData.forEach(rom => {
+                allDevices.add(rom.device);
+                allAndroidVersions.add(rom.androidVersion);
+            });
+
+            // Populate device filter
+            allDevices.forEach(device => {
+                const option = document.createElement('option');
+                option.value = device;
+                option.textContent = device;
+                deviceFilter.appendChild(option);
+            });
+
+            // Populate Android version filter
+            allAndroidVersions.forEach(version => {
+                const option = document.createElement('option');
+                option.value = version;
+                option.textContent = version;
+                androidVersionFilter.appendChild(option);
+            });
+        }
+
+        // Function to filter ROMs
+        function filterRoms() {
+            const searchTerm = romSearch.value.toLowerCase();
+            const selectedDevice = deviceFilter.value;
+            const selectedAndroidVersion = androidVersionFilter.value;
+
+            const filteredRoms = romsData.filter(rom => {
+                const matchesSearch = rom.name.toLowerCase().includes(searchTerm) ||
+                                      rom.desc.toLowerCase().includes(searchTerm) ||
+                                      rom.device.toLowerCase().includes(searchTerm) ||
+                                      rom.androidVersion.toLowerCase().includes(searchTerm);
+                const matchesDevice = selectedDevice === "" || rom.device === selectedDevice;
+                const matchesAndroidVersion = selectedAndroidVersion === "" || rom.androidVersion === selectedAndroidVersion;
+
+                return matchesSearch && matchesDevice && matchesAndroidVersion;
+            });
+            renderRomCards(filteredRoms);
+        }
+
+        // Open ROM modal
+        function openRomModal(rom, clickedCard) {
+            // Get ROM card position for animation
+            const rect = clickedCard.getBoundingClientRect();
+            const scrollY = window.scrollY || window.pageYOffset;
+            const startX = rect.left + rect.width / 2 - window.innerWidth / 2;
+            const startY = rect.top + rect.height / 2 + scrollY - window.innerHeight / 2;
+
+            // Set modal starting position
+            modalContent.style.setProperty('--start-x', `${startX}px`);
+            modalContent.style.setProperty('--start-y', `${startY}px`);
+
+            // Populate modal
+            document.getElementById('modalRomName').textContent = rom.name;
+            document.getElementById('modalRomDesc').textContent = rom.desc;
+            document.getElementById('modalDevice').textContent = rom.device;
+            document.getElementById('modalAndroidVersion').textContent = rom.androidVersion;
+            document.getElementById('modalDownload').href = rom.downloadUrl;
+            document.getElementById('modalSource').href = rom.sourceUrl;
+            document.getElementById('modalDeviceTree').href = rom.deviceTreeUrl;
+
+            // Reset changelog state
+            changelogContainer.classList.add('hidden');
+            changelogList.innerHTML = '';
+            changelogError.classList.add('hidden');
+            isChangelogLoaded = false;
+            modal.dataset.changelogUrl = rom.changelogUrl;
+
+            // Show modal
+            modal.classList.remove('hidden');
+        }
 
         // Toggle changelog visibility and load if not already loaded
         changelogToggle.addEventListener('click', async () => {
             changelogContainer.classList.toggle('hidden');
 
             if (!changelogContainer.classList.contains('hidden') && !isChangelogLoaded) {
+                changelogError.classList.add('hidden'); // Hide previous error
                 try {
                     const response = await fetch(modal.dataset.changelogUrl);
                     if (!response.ok) throw new Error('Failed to fetch changelog');
@@ -240,12 +350,12 @@
 
                     // Basic validation: Ensure no HTML/JS tags
                     if (/[<>{}]/.test(changelogText)) {
-                        throw new Error('Invalid changelog content');
+                        throw new Error('Invalid changelog content detected.');
                     }
 
                     const changelog = changelogText.split('\n').filter(item => item.trim());
                     if (changelog.length === 0) {
-                        throw new Error('Empty changelog');
+                        throw new Error('Empty changelog file.');
                     }
 
                     changelog.forEach(item => {
@@ -259,12 +369,14 @@
                         li.textContent = item;
                         changelogList.appendChild(li);
                     });
+                    changelogError.classList.remove('hidden'); // Show error message
                     console.error('Changelog fetch error:', error);
                 }
                 isChangelogLoaded = true;
             }
         });
 
+        // Close modal listeners
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
         });
@@ -273,6 +385,17 @@
             if (e.target === modal) {
                 modal.classList.add('hidden');
             }
+        });
+
+        // Event listeners for search and filters
+        romSearch.addEventListener('input', filterRoms);
+        deviceFilter.addEventListener('change', filterRoms);
+        androidVersionFilter.addEventListener('change', filterRoms);
+
+        // Initial render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateFilters();
+            renderRomCards(romsData);
         });
     </script>
 </body>
