@@ -105,41 +105,41 @@
         </div>
     </nav>
 
-    <section id="home" class="bg-gradient-to-b from-blue-500 to-indigo-500 text-white py-20 lg:py-32 text-center">
+    <section id="home" class="bg-gradient-to-b from-blue-500 to-indigo-500 text-white py-20 lg:py-48 text-center">
         <div class="container mx-auto max-w-5xl px-4 lg:px-8">
             <h2 class="text-4xl lg:text-6xl font-bold mb-4 lg:mb-6">Welcome to Saroj Nokia ROMs</h2>
-            <p class="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-3xl mx-auto">Explore our collection of custom Android ROMs built for performance and customization.</p>
+            <p class="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-3xl lg:max-w-4xl mx-auto">Explore our collection of custom Android ROMs built for performance and customization.</p>
             <a href="#roms" class="bg-white text-blue-600 px-6 lg:px-8 py-3 lg:py-4 rounded-full font-semibold text-base lg:text-lg hover:bg-gray-200 transform hover:scale-105 transition-transform">View ROMs</a>
         </div>
     </section>
 
-    <section id="roms" class="py-16 lg:py-24">
+    <section id="roms" class="py-16 lg:py-32">
         <div class="container mx-auto max-w-7xl px-4 lg:px-8">
             <h2 class="text-3xl lg:text-5xl font-bold text-center mb-8 lg:mb-12">Available ROMs</h2>
             
             <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
-                <input type="text" id="romSearch" placeholder="Search ROMs..." class="w-full md:w-1/2 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
-                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-                    <select id="deviceFilter" class="w-full md:w-auto p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                <input type="text" id="romSearch" placeholder="Search ROMs..." class="w-full md:w-1/2 lg:w-2/5 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto lg:w-auto flex-grow justify-end">
+                    <select id="deviceFilter" class="w-full md:w-auto lg:w-1/5 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
                         <option value="">All Devices</option>
                     </select>
-                    <select id="androidVersionFilter" class="w-full md:w-auto p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
+                    <select id="androidVersionFilter" class="w-full md:w-auto lg:w-1/5 p-3 rounded-lg bg-gray-800 text-gray-100 border border-gray-700 focus:outline-none focus:border-blue-500">
                         <option value="">All Android Versions</option>
                     </select>
+                    <button id="addRomBtn" class="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition-colors whitespace-nowrap">
+                        Add New ROM
+                    </button>
                 </div>
-                <button id="addRomBtn" class="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold transition-colors">
-                    Add New ROM
-                </button>
             </div>
 
-            <div id="romsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div id="romsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
                 <p id="noResults" class="hidden text-center text-gray-400 col-span-full">No ROMs found matching your criteria.</p>
             </div>
         </div>
     </section>
 
     <div id="romModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden flex items-center justify-center z-50">
-        <div class="glassmorphism rounded-xl p-6 lg:p-8 max-w-lg lg:max-w-2xl w-full mx-4 modal-content relative">
+        <div class="glassmorphism rounded-xl p-6 lg:p-10 max-w-lg lg:max-w-3xl w-full mx-4 modal-content relative">
             <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100 text-xl lg:text-2xl" aria-label="Close modal">×</button>
             <h2 id="modalRomName" class="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6"></h2>
             <p id="modalRomDesc" class="text-gray-300 mb-4 lg:mb-6 text-base lg:text-lg"></p>
@@ -161,7 +161,7 @@
     </div>
 
     <div id="addRomModal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden flex items-center justify-center z-50">
-        <div class="glassmorphism rounded-xl p-6 lg:p-8 max-w-lg lg:max-w-2xl w-full mx-4 modal-content relative">
+        <div class="glassmorphism rounded-xl p-6 lg:p-10 max-w-lg lg:max-w-3xl w-full mx-4 modal-content relative">
             <button id="closeAddRomModal" class="absolute top-2 right-2 text-gray-300 hover:text-gray-100 text-xl lg:text-2xl" aria-label="Close add ROM modal">×</button>
             <h2 class="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6">Add New ROM</h2>
             <p class="text-red-400 mb-4" id="addRomError" style="display: none;">Please fill in all required fields.</p>
@@ -400,9 +400,17 @@
                 document.getElementById('modalRomDesc').textContent = rom.desc;
                 document.getElementById('modalDevice').textContent = rom.device;
                 document.getElementById('modalAndroidVersion').textContent = rom.androidVersion;
-                document.getElementById('modalDownload').href = rom.downloadUrl;
-                document.getElementById('modalSource').href = rom.sourceUrl;
-                document.getElementById('modalDeviceTree').href = rom.deviceTreeUrl;
+                
+                // Set link hrefs, default to '#' if not provided to avoid broken links
+                document.getElementById('modalDownload').href = rom.downloadUrl || '#';
+                document.getElementById('modalSource').href = rom.sourceUrl || '#';
+                document.getElementById('modalDeviceTree').href = rom.deviceTreeUrl || '#';
+
+                // Handle link visibility based on availability
+                document.getElementById('modalDownload').classList.toggle('hidden', !rom.downloadUrl);
+                document.getElementById('modalSource').classList.toggle('hidden', !rom.sourceUrl);
+                document.getElementById('modalDeviceTree').classList.toggle('hidden', !rom.deviceTreeUrl);
+
 
                 // Reset changelog state
                 changelogContainer.classList.add('hidden');
@@ -429,7 +437,7 @@
 
                     if (!changelogUrl) {
                         changelogLoading.classList.add('hidden');
-                        changelogError.classList.remove('hidden');
+                        changelogError.classList.remove('hidden'); // Ensure error is visible
                         changelogList.innerHTML = '';
                         fallbackChangelog.forEach(item => {
                             const li = document.createElement('li');
